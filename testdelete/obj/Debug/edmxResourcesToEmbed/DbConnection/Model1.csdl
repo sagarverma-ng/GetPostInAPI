@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProductModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="childTab">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlanName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="parentID" Type="Int32" />
+    <NavigationProperty Name="parentTab" Relationship="Self.FK__childTab__parent__71D1E811" FromRole="childTab" ToRole="parentTab" />
+  </EntityType>
+  <EntityType Name="Mark">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SubjectName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SubjectMarks" Type="Int32" />
+    <Property Name="StudentId" Type="Int32" />
+    <NavigationProperty Name="Student" Relationship="Self.FK__Marks__StudentId__07C12930" FromRole="Marks" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="parentTab">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AddressName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="childTabs" Relationship="Self.FK__childTab__parent__71D1E811" FromRole="parentTab" ToRole="childTab" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="nameData" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="productSets" Relationship="Self.FK__productSe__produ__5070F446" FromRole="product" ToRole="productSet" />
+  </EntityType>
+  <EntityType Name="productSet">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="nameinfo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="productID" Type="Int32" />
+    <NavigationProperty Name="product" Relationship="Self.FK__productSe__produ__5070F446" FromRole="productSet" ToRole="product" />
+  </EntityType>
+  <EntityType Name="SchoolInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClassName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Students" Relationship="Self.FK__Student__SudentI__04E4BC85" FromRole="SchoolInfo" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="studentName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="SudentInfoID" Type="Int32" />
+    <NavigationProperty Name="Marks" Relationship="Self.FK__Marks__StudentId__07C12930" FromRole="Student" ToRole="Marks" />
+    <NavigationProperty Name="SchoolInfo" Relationship="Self.FK__Student__SudentI__04E4BC85" FromRole="Student" ToRole="SchoolInfo" />
+  </EntityType>
+  <Association Name="FK__childTab__parent__71D1E811">
+    <End Role="parentTab" Type="Self.parentTab" Multiplicity="0..1" />
+    <End Role="childTab" Type="Self.childTab" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="parentTab">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="childTab">
+        <PropertyRef Name="parentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Marks__StudentId__07C12930">
+    <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+    <End Role="Marks" Type="Self.Mark" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Marks">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__productSe__produ__5070F446">
+    <End Role="product" Type="Self.product" Multiplicity="0..1" />
+    <End Role="productSet" Type="Self.productSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="productSet">
+        <PropertyRef Name="productID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Student__SudentI__04E4BC85">
+    <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SchoolInfo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="SudentInfoID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProductEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="childTabs" EntityType="Self.childTab" />
+    <EntitySet Name="Marks" EntityType="Self.Mark" />
+    <EntitySet Name="parentTabs" EntityType="Self.parentTab" />
+    <EntitySet Name="products" EntityType="Self.product" />
+    <EntitySet Name="productSets" EntityType="Self.productSet" />
+    <EntitySet Name="SchoolInfoes" EntityType="Self.SchoolInfo" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <AssociationSet Name="FK__childTab__parent__71D1E811" Association="Self.FK__childTab__parent__71D1E811">
+      <End Role="parentTab" EntitySet="parentTabs" />
+      <End Role="childTab" EntitySet="childTabs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Marks__StudentId__07C12930" Association="Self.FK__Marks__StudentId__07C12930">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Marks" EntitySet="Marks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__productSe__produ__5070F446" Association="Self.FK__productSe__produ__5070F446">
+      <End Role="product" EntitySet="products" />
+      <End Role="productSet" EntitySet="productSets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Student__SudentI__04E4BC85" Association="Self.FK__Student__SudentI__04E4BC85">
+      <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

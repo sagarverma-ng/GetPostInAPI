@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ProductModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="childTab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PlanName" Type="varchar" MaxLength="20" />
+          <Property Name="parentID" Type="int" />
+        </EntityType>
+        <EntityType Name="Marks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubjectName" Type="varchar" MaxLength="20" />
+          <Property Name="SubjectMarks" Type="int" />
+          <Property Name="StudentId" Type="int" />
+        </EntityType>
+        <EntityType Name="parentTab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AddressName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nameData" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="productSet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="nameinfo" Type="varchar" MaxLength="20" />
+          <Property Name="productID" Type="int" />
+        </EntityType>
+        <EntityType Name="SchoolInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassName" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RNo" Type="varchar" MaxLength="20" />
+          <Property Name="studentName" Type="varchar" MaxLength="20" />
+          <Property Name="SudentInfoID" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Product.dbo.Tab1' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Tab1">
+          <Property Name="id" Type="varchar" MaxLength="10" />
+          <Property Name="nameData" Type="varchar" MaxLength="10" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Product.dbo.Tab2' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Tab2">
+          <Property Name="id" Type="varchar" MaxLength="10" />
+          <Property Name="nameData" Type="varchar" MaxLength="10" />
+        </EntityType>-->
+        <Association Name="FK__childTab__parent__71D1E811">
+          <End Role="parentTab" Type="Self.parentTab" Multiplicity="0..1" />
+          <End Role="childTab" Type="Self.childTab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parentTab">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="childTab">
+              <PropertyRef Name="parentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marks__StudentId__07C12930">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Marks" Type="Self.Marks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Marks">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productSe__produ__5070F446">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="productSet" Type="Self.productSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productSet">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__SudentI__04E4BC85">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="SudentInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductModelStoreContainer">
+          <EntitySet Name="childTab" EntityType="Self.childTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marks" EntityType="Self.Marks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="parentTab" EntityType="Self.parentTab" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productSet" EntityType="Self.productSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SchoolInfo" EntityType="Self.SchoolInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__childTab__parent__71D1E811" Association="Self.FK__childTab__parent__71D1E811">
+            <End Role="parentTab" EntitySet="parentTab" />
+            <End Role="childTab" EntitySet="childTab" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marks__StudentId__07C12930" Association="Self.FK__Marks__StudentId__07C12930">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="Marks" EntitySet="Marks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productSe__produ__5070F446" Association="Self.FK__productSe__produ__5070F446">
+            <End Role="product" EntitySet="product" />
+            <End Role="productSet" EntitySet="productSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__SudentI__04E4BC85" Association="Self.FK__Student__SudentI__04E4BC85">
+            <End Role="SchoolInfo" EntitySet="SchoolInfo" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProductModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="childTab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PlanName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="parentID" Type="Int32" />
+          <NavigationProperty Name="parentTab" Relationship="Self.FK__childTab__parent__71D1E811" FromRole="childTab" ToRole="parentTab" />
+        </EntityType>
+        <EntityType Name="Mark">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubjectName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SubjectMarks" Type="Int32" />
+          <Property Name="StudentId" Type="Int32" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__Marks__StudentId__07C12930" FromRole="Marks" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="parentTab">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AddressName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="childTabs" Relationship="Self.FK__childTab__parent__71D1E811" FromRole="parentTab" ToRole="childTab" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nameData" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="productSets" Relationship="Self.FK__productSe__produ__5070F446" FromRole="product" ToRole="productSet" />
+        </EntityType>
+        <EntityType Name="productSet">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="nameinfo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="productID" Type="Int32" />
+          <NavigationProperty Name="product" Relationship="Self.FK__productSe__produ__5070F446" FromRole="productSet" ToRole="product" />
+        </EntityType>
+        <EntityType Name="SchoolInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Students" Relationship="Self.FK__Student__SudentI__04E4BC85" FromRole="SchoolInfo" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="studentName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SudentInfoID" Type="Int32" />
+          <NavigationProperty Name="Marks" Relationship="Self.FK__Marks__StudentId__07C12930" FromRole="Student" ToRole="Marks" />
+          <NavigationProperty Name="SchoolInfo" Relationship="Self.FK__Student__SudentI__04E4BC85" FromRole="Student" ToRole="SchoolInfo" />
+        </EntityType>
+        <Association Name="FK__childTab__parent__71D1E811">
+          <End Role="parentTab" Type="Self.parentTab" Multiplicity="0..1" />
+          <End Role="childTab" Type="Self.childTab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="parentTab">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="childTab">
+              <PropertyRef Name="parentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Marks__StudentId__07C12930">
+          <End Role="Student" Type="Self.Student" Multiplicity="0..1" />
+          <End Role="Marks" Type="Self.Mark" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Marks">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__productSe__produ__5070F446">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="productSet" Type="Self.productSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="productSet">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__SudentI__04E4BC85">
+          <End Role="SchoolInfo" Type="Self.SchoolInfo" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SchoolInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="SudentInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProductEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="childTabs" EntityType="Self.childTab" />
+          <EntitySet Name="Marks" EntityType="Self.Mark" />
+          <EntitySet Name="parentTabs" EntityType="Self.parentTab" />
+          <EntitySet Name="products" EntityType="Self.product" />
+          <EntitySet Name="productSets" EntityType="Self.productSet" />
+          <EntitySet Name="SchoolInfoes" EntityType="Self.SchoolInfo" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK__childTab__parent__71D1E811" Association="Self.FK__childTab__parent__71D1E811">
+            <End Role="parentTab" EntitySet="parentTabs" />
+            <End Role="childTab" EntitySet="childTabs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Marks__StudentId__07C12930" Association="Self.FK__Marks__StudentId__07C12930">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Marks" EntitySet="Marks" />
+          </AssociationSet>
+          <AssociationSet Name="FK__productSe__produ__5070F446" Association="Self.FK__productSe__produ__5070F446">
+            <End Role="product" EntitySet="products" />
+            <End Role="productSet" EntitySet="productSets" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__SudentI__04E4BC85" Association="Self.FK__Student__SudentI__04E4BC85">
+            <End Role="SchoolInfo" EntitySet="SchoolInfoes" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProductModelStoreContainer" CdmEntityContainer="ProductEntities">
+          <EntitySetMapping Name="childTabs">
+            <EntityTypeMapping TypeName="ProductModel.childTab">
+              <MappingFragment StoreEntitySet="childTab">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlanName" ColumnName="PlanName" />
+                <ScalarProperty Name="parentID" ColumnName="parentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marks">
+            <EntityTypeMapping TypeName="ProductModel.Mark">
+              <MappingFragment StoreEntitySet="Marks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="SubjectMarks" ColumnName="SubjectMarks" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="parentTabs">
+            <EntityTypeMapping TypeName="ProductModel.parentTab">
+              <MappingFragment StoreEntitySet="parentTab">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AddressName" ColumnName="AddressName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="ProductModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nameData" ColumnName="nameData" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productSets">
+            <EntityTypeMapping TypeName="ProductModel.productSet">
+              <MappingFragment StoreEntitySet="productSet">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nameinfo" ColumnName="nameinfo" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SchoolInfoes">
+            <EntityTypeMapping TypeName="ProductModel.SchoolInfo">
+              <MappingFragment StoreEntitySet="SchoolInfo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="ProductModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RNo" ColumnName="RNo" />
+                <ScalarProperty Name="studentName" ColumnName="studentName" />
+                <ScalarProperty Name="SudentInfoID" ColumnName="SudentInfoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
